@@ -72,7 +72,7 @@ You can install Postman via this website: https://www.postman.com/downloads/
   - [x] Commit: `Create Notification database and Notification repository struct skeleton.`
   - [x] Commit: `Implement add function in Notification repository.`
   - [x] Commit: `Implement list_all_as_string function in Notification repository.`
-  - [ ] Write answers of your learning module's "Reflection Subscriber-1" questions in this README.
+  - [x] Write answers of your learning module's "Reflection Subscriber-1" questions in this README.
 - **STAGE 3: Implement services and controllers**
   - [ ] Commit: `Create Notification service struct skeleton.`
   - [ ] Commit: `Implement subscribe function in Notification service.`
@@ -92,5 +92,10 @@ This is the place for you to write reflections:
 ### Mandatory (Subscriber) Reflections
 
 #### Reflection Subscriber-1
+
+1. In this tutorial, we used RwLock<> to synchronise the use of Vec of Notifications. Explain why it is necessary for this case, and explain why we do not use Mutex<> instead?
+   Jawaban : `RwLock<>` digunakan dalam kasus ini untuk memungkinkan _multiple reader_ untuk mengakses data secara bersamaan dan satu _writer_ yang hanya dapat mengaksesnya pada satu waktu. Dalam kasus ini, memiliki banyak Subscriber yang ingin membaca data notifikasi secara bersamaan, tetapi hanya satu Publisher yang dapat menulis data notifikasi. Dengan menggunakan `RwLock<>`, ini memastikan bahwa tidak ada kebocoran data atau konflik akses yang terjadi. Dikasus ini ini tidak menggunakan `Mutex<>` karena dapat mengkitbatkan kinerja yang buruk karena situasi dimana hanya satu subcriber yang dapat membaca notifikasi pada satu waktu, sementara yang lainnya harus menunggu.
+2. In this tutorial, we used lazy_static external library to define Vec and DashMap as a “static” variable. Compared to Java where we can mutate the content of a static variable via a static function, why did not Rust allow us to do so?
+   Jawaban : Rust tidak mengizinkan mutasi langsung dari variabel static karena rust menerapkan konsep keamanan yang ketat untuk mencegah _bug_ yang sulit dilacak. Dengan menggunakan lazy_static data akan bersifat singleton yang akan memastikan konsistensi data. Rust menyediakan cara untuk mendapat mutasi dari variabel static melalui pattern yang disebut "interior mutability" untuk mempertahankan keamanan sambil memungkin akses mutable ke variabel static.
 
 #### Reflection Subscriber-2
