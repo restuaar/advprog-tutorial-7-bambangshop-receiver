@@ -83,7 +83,7 @@ You can install Postman via this website: https://www.postman.com/downloads/
   - [x] Commit: `Implement receive function in Notification controller.`
   - [x] Commit: `Implement list_messages function in Notification service.`
   - [x] Commit: `Implement list function in Notification controller.`
-  - [ ] Write answers of your learning module's "Reflection Subscriber-2" questions in this README.
+  - [x] Write answers of your learning module's "Reflection Subscriber-2" questions in this README.
 
 ## Your Reflections
 
@@ -93,9 +93,17 @@ This is the place for you to write reflections:
 
 #### Reflection Subscriber-1
 
-1. In this tutorial, we used RwLock<> to synchronise the use of Vec of Notifications. Explain why it is necessary for this case, and explain why we do not use Mutex<> instead?
+1. In this tutorial, we used RwLock<> to synchronise the use of Vec of Notifications. Explain why it is necessary for this case, and explain why we do not use Mutex<> instead?  
    Jawaban : `RwLock<>` digunakan dalam kasus ini untuk memungkinkan _multiple reader_ untuk mengakses data secara bersamaan dan satu _writer_ yang hanya dapat mengaksesnya pada satu waktu. Dalam kasus ini, memiliki banyak Subscriber yang ingin membaca data notifikasi secara bersamaan, tetapi hanya satu Publisher yang dapat menulis data notifikasi. Dengan menggunakan `RwLock<>`, ini memastikan bahwa tidak ada kebocoran data atau konflik akses yang terjadi. Dikasus ini ini tidak menggunakan `Mutex<>` karena dapat mengkitbatkan kinerja yang buruk karena situasi dimana hanya satu subcriber yang dapat membaca notifikasi pada satu waktu, sementara yang lainnya harus menunggu.
-2. In this tutorial, we used lazy_static external library to define Vec and DashMap as a “static” variable. Compared to Java where we can mutate the content of a static variable via a static function, why did not Rust allow us to do so?
+2. In this tutorial, we used lazy_static external library to define Vec and DashMap as a “static” variable. Compared to Java where we can mutate the content of a static variable via a static function, why did not Rust allow us to do so?  
    Jawaban : Rust tidak mengizinkan mutasi langsung dari variabel static karena rust menerapkan konsep keamanan yang ketat untuk mencegah _bug_ yang sulit dilacak. Dengan menggunakan lazy_static data akan bersifat singleton yang akan memastikan konsistensi data. Rust menyediakan cara untuk mendapat mutasi dari variabel static melalui pattern yang disebut "interior mutability" untuk mempertahankan keamanan sambil memungkin akses mutable ke variabel static.
 
 #### Reflection Subscriber-2
+
+1. Have you explored things outside of the steps in the tutorial, for example: src/lib.rs? If not, explain why you did not do so. If yes, explain things that you have learned from those other parts of code.  
+   Jawaban : Saya belum menjelajahi hal-hal di luar langkah-langkah yang ada dalam tutorial, termasuk src/lib.rs. Alasannya karena saya fokus untuk memahami dan mengimplementasikan langkah-langkah dari tutorial tersebut secara mendalam. Namun, saya menyadari bahwa langkah-langkah tersebut mungkin hanya sebagian kecil dari apa yang bisa dipelajari dari kode tersebut. Saya akan mencoba untuk menjelajahi kode tambahan tersebut agar bisa memperluas pemahaman saya tentang Rust dan aplikasi yang sedang dibangun.
+
+2. Since you have completed the tutorial by now and have tried to test your notification system by spawning multiple instances of Receiver, explain how Observer pattern eases you to plug in more subscribers. How about spawning more than one instance of Main app, will it still be easy enough to add to the system?  
+   Jawaban : Dengan pola Observer, cukup dengan membuat Subscriber baru dan mendaftarkannya ke Publisher, tanpa perlu mengubah kode di bagian lain dari aplikasi. Namun, jika ingin membuat lebih dari satu instance dari Main app, mungkin akan membutuhkan penyesuaian lebih lanjut karena mungkin ada asumsi tertentu yang terkait dengan satu instance dari Main app. Namun, dengan desain yang fleksibel, menambahkan lebih dari satu instance dari Main app seharusnya masih memungkinkan dengan sedikit modifikasi.
+3. Have you tried to make your own Tests, or enhance documentation on your Postman collection? If you have tried those features, tell us whether it is useful for your work (it can be your tutorial work or your Group Project).  
+   Jawaban : Saya belum mencoba membuat test sendiri atau meningkatkan dokumentasi pada koleksi Postman saya. Namun, menurut saya kedua fitur tersebut sangat berguna dalam pengembangan perangkat lunak. Dengan pengujian sendiri dengan memastikan bahwa kode yang saya tulis berfungsi seperti yang diharapkan.
